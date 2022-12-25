@@ -2,7 +2,7 @@
 $(function () {
   // set up current day for display in header format: (Jan 1, 2022)
   var today = dayjs();
-  $('#currentDay').text(today.format('MMM D, YYYY'));
+  $('#currentDay').text(today.format('MMM D, YYYY, HH:MM'));
 
   // save user input form data to schedule in localData
   $('.saveBtn').on('click', (event) => {
@@ -20,12 +20,15 @@ $(function () {
   // console.log('ID for button div is: ' + divId);
   });
 
+  // for loop to check each hour block when page is opened
   for(i = 9; i < 18; i++) {
     const timeBlock = $(`#hour-${i}`);
     let currentTime = today.format('HH');
   // for testing:
   // console.log('hour = ' + currentTime);
   // console.log(timeBlock);
+
+  // compare time block to current hour and switch class
     if(i < currentTime) {
       timeBlock.removeClass('present future');
       timeBlock.addClass('past');
@@ -36,14 +39,15 @@ $(function () {
       timeBlock.removeClass('present past');
       timeBlock.addClass('future');
     };
-
+  
+  // use the divId format to call local data keys
     let storedData = localStorage.getItem(`hour-${i}`);
     console.log(`stored data: ${storedData}`);
-  // initialize from localStorage
+
+  // initialize from localStorage if not null
     if(storedData !== 'null'){
       timeBlock.children('textarea').text(storedData);
     }
   };
-
-  // TODO: Add code to display the current date in the header of the page.
 });
+
