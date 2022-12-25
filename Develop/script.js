@@ -4,6 +4,18 @@ $(function () {
   var today = dayjs();
   $('#currentDay').text(today.format('MMM D, YYYY'));
 
+  // save user input form data to schedule in localData
+  $('.saveBtn').on('click', (event) => {
+    event.preventDefault();
+    // find parent of button then child containing textarea
+    const textInput = $(event.target).parents().children('textarea');
+    // get unique id from event parent
+    const divId = $(event.target).parent().attr('id');
+    // save user input
+    localStorage.setItem(divId, textInput.val())
+    console.log(textInput);
+    console.log(divId);
+  });
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
